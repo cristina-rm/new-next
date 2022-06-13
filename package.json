@@ -5,11 +5,13 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -H 0.0.0.0 -p ${PORT:-8080}",
-    "export": "npm run build && next export && mv out _static"
+    "start": "next start"
   },
   "dependencies": {
     "autoprefixer": "^10.4.7",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.1",
+    "marked": "^4.0.16",
     "next": "12.1.6",
     "postcss": "^8.4.14",
     "qs": "^6.10.3",
