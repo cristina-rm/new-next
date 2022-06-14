@@ -2,35 +2,14 @@ import React from "react";
 import Link from "next/link";
 import { useState } from "react";
 import { fetchAPI } from "../lib/api";
-import { setToken } from "../lib/auth";
+import { unsetToken } from "../lib/auth";
+import { useUser } from "../lib/authContext";
 
 const Nav = ({ workspaces }) => {
-  const [data, setData] = useState({
-    identifier: '',
-    password: ''
-  });
-  const loading = false;
-  const user = '';
+  const { user, loading } = useUser();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const data = await fetchAPI('${process.env.NEXT_PUBLIC_API_URL}/auth/local', {
-      method: 'POST',
-      header: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        identifier: data.identifier,
-        password: data.password
-      })
-    });
-
-    setToken(data);
-  };
-
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+  const logout = () => {
+      unsetToken();
   };
 
   return (

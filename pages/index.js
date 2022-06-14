@@ -2,10 +2,13 @@ import Link from "next/link";
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia } from "../lib/media";
 import Layout from "../components/layout";
+import {useFetchUser} from "../lib/authContext";
 
 export default function Home({ workspaces }) {
+    const { user, loading } = useFetchUser();
+
     return (
-        <Layout workspaces={workspaces}>
+        <Layout workspaces={workspaces} user={user}>
             <h1 className="text-lg lg:text-xl font-semibold tracking-wider uppercase text-green-500">
                 Workspaces
                 ({workspaces && workspaces.length && <span>{workspaces.length}</span>}
