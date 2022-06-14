@@ -2,10 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61147171-9635-4e4b-a673-f71d711152c1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/image.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/layout.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/nav.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/posts/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/post/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/post/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/post/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/posts/[id].js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,11 +57,22 @@
       <option name="presentableId" value="Default" />
       <updated>1654152828302</updated>
       <workItem from="1654152830865" duration="5235000" />
-      <workItem from="1655119913607" duration="830000" />
+      <workItem from="1655119913607" duration="25672000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
