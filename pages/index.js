@@ -82,9 +82,7 @@ export async function getStaticProps() {
     });
 
     const reservations = reservationsRes.data;
-    console.log(reservations); // need office id
     const dataForCalendar = reservations.map((reservation) => {
-        // console.log(reservation.attributes.office.data); // need office id
         return {
             id: reservation.id,
             resourceId: reservation.attributes.office.data.id,
@@ -96,10 +94,10 @@ export async function getStaticProps() {
 
     return {
         props: {
-        workspaces: workspacesRes.data,
-        offices: dataForResources,
-        reservations: reservations,
-        dataForCalendar: dataForCalendar,
+            workspaces: workspacesRes.data,
+            offices: dataForResources,
+            reservations: reservations,
+            dataForCalendar: dataForCalendar,
         },
         revalidate: 1,
     };
