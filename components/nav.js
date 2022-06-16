@@ -5,15 +5,16 @@ import { fetchAPI } from "../lib/api";
 import { unsetToken } from "../lib/auth";
 import { useUser } from "../lib/authContext";
 
-const Nav = ({ workspaces }) => {
+const Nav = ({ workspaces, auth_user }) => {
   const { user, loading } = useUser();
+  // console.log('auth ', auth_user);
 
   const logout = () => {
       unsetToken();
   };
 
   return (
-      <div className="w-60 h-screen shadow-lg bg-gray-900" id="sidenavExample">
+      <div className="w-60 min-h-screen shadow-lg bg-gray-900" id="sidenavExample">
         <ul className="relative">
           <li>
             <Link href="/">

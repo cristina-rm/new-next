@@ -16,7 +16,7 @@ export default function Login({ }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // console.log(process.env.NEXT_PUBLIC_API_URL); // ok
-        console.log(data); // ok
+        // console.log(data); // ok
 
         const response = await fetchAPI('/auth/local', {}, {
             method: 'POST',
