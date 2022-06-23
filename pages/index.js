@@ -15,7 +15,7 @@ export default function Home({ workspaces, dataForCalendar, offices }) {
         alert(arg.dateStr);
     };
     // console.log(dataForCalendar);
-    // console.log(offices);
+    console.log('index user ',user);
 
     return (
         <Layout workspaces={workspaces} user={user}>

@@ -87,8 +87,19 @@ const Nav = ({ workspaces, auth_user }) => {
             </a>
           </li>
 
+          <hr className="my-4"/>
+
           {!loading &&
             (user ? <>
+              <li className="relative" id="profile">
+                <Link href="/reservations">
+                  <a className="flex items-center text-xs uppercase font-semibold py-4 px-6 h-12 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer">
+                    *
+                    <span className="pr-6 pl-1 text-green-500 hover:text-white">My reservations</span>
+                  </a>
+                </Link>
+              </li>
+
               <li className="relative" id="profile">
                 <Link href="/profile">
                   <a className="flex items-center text-xs uppercase font-semibold py-4 px-6 h-12 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer">

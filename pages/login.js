@@ -4,7 +4,7 @@ import { setToken } from "../lib/auth";
 import { useState } from "react";
 import { useUser } from "../lib/authContext";
 
-export default function Login({ }) {
+export default function Login({}) {
     const [data, setData] = useState({
         identifier: '',
         password: ''
@@ -18,12 +18,8 @@ export default function Login({ }) {
         // console.log(process.env.NEXT_PUBLIC_API_URL); // ok
         // console.log(data); // ok
 
-        const response = await fetchAPI('/auth/local', {}, {
+        const response = await fetchAPI('/auth/local', {
             method: 'POST',
-            /*headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },*/
             body: JSON.stringify({
                 identifier: data.identifier,
                 password: data.password

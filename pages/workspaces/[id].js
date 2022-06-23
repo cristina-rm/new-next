@@ -2,7 +2,7 @@ import Link from "next/link";
 import { fetchAPI } from "../../lib/api";
 import Layout from "../../components/layout";
 import Modal from "../../components/Modal";
-import {useFetchUser} from "../../lib/authContext"; // needed for dayClick
+import { useFetchUser } from "../../lib/authContext"; // needed for dayClick
 import dynamic from 'next/dynamic';
 import {useState} from "react";
 import { ToastContainer, toast } from 'react-toastify';
@@ -18,11 +18,26 @@ export default function Workspace({ workspace, workspaces, dataForCalendar, offi
     const [office, setOffice] = useState(null);
     // console.log(user.id);
 
+    // *********** Testing Strapi API with fetch ***************
+    // Create new reservation
+    /*const response = fetch('http://localhost:1337/api/reservations', {
+        method: 'POST',
+        body: JSON.stringify(
+            { data:
+                    {
+                        user: 1,
+                        office: 3,
+                        title: 'Reservation office 3',
+                    }
+            })
+    });*/
+    // ************************************
+
     const [data, setData] = useState({
         user: user ? user.id : 1,
-        office: office ? 2 : 2,
+        office: 3,
         // office: office ? office.id : '',
-        title: 'reservation test title',
+        title: 'Reservation office 3',
         start_date: '',
         end_date: '',
         all_day: false
@@ -50,24 +65,40 @@ export default function Workspace({ workspace, workspaces, dataForCalendar, offi
     // toast.success("Heu, I'm here!");
 
     const addItem = async (e) => {
-        // user, office, title, start_date, end_date, all_day
-        console.log('add item', JSON.stringify(data)); // id, title
+        // console.log('add item sent data ', JSON.stringify({ data: data })); // id, title
+        let formData = new FormData();
+        formData.append("data", JSON.stringify(data));
+        console.log('formData');
+        for (var p of formData) {
+            console.log(p);
+        }
 
-        const response = await fetchAPI('/reservations', {}, {
+        /*const response = await fetchAPI('/reservations', {
             method: 'POST',
-            body: {"data": JSON.stringify(data)}
-        }); // error forbidden for authenticated user
-
-        /*await fetchAPI('/reservations', {
-            method: 'POST',
-            body: JSON.stringify(data),
+            // Authorization: `Bearer ${jwt}`,
+            // body: JSON.stringify({ data: formData })
+            body: formData
+        });*/
+        fetch(`http://localhost:1337/api/reservations`, {
+            method: 'post' ,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify({ data: formData })
         })
-        .then((response) => response.json())
-        .then((json) => console.log(json));*/
-        console.log('response after fetch ', response);
-
-        setShowModal(false);
-        toast.success("The event has been successfully added to your agenda.");
+        .then(response => {
+            if (!response.ok) {
+              throw new Error('error => how to get bad request message here?')
+            } else  {
+                console.log('response ok ', response);
+                setShowModal(false);
+                toast.success("The event has been successfully added to your agenda.");
+            }
+        })
+        .catch((e) => {
+            console.log(e);
+        });
     };
 
     return (
