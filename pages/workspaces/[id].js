@@ -57,7 +57,7 @@ export default function Workspace({ workspace, workspaces, dataForCalendar, offi
 
     const handleDateClick = (arg) => {
         setShowModal(true);
-        // for type1: arg.resource._resource.extendedProps.type1
+        // for type1: arg.resource._resource.extendedProps.type1 // filter
         setOffice(arg.resource._resource.extendedProps.office);
         console.log(arg.resource._resource.extendedProps); // id, title
     };
@@ -110,7 +110,6 @@ export default function Workspace({ workspace, workspaces, dataForCalendar, offi
                 <div className="text-green-600 font-bold text-2xl">{workspace.attributes.name} workspace</div>
 
                 <h3 className="mb-8">Offices</h3>
-
                 <h3 className="mb-4">Reservations</h3>
 
                 <FullCalendar
@@ -122,31 +121,46 @@ export default function Workspace({ workspace, workspaces, dataForCalendar, offi
             </div>
 
             {office && <Modal onClose={() => setShowModal(false)} addReservation={addItem} showModal={showModal} office={office}>
-                <div className="w-full flex space-x-4">
-                    <div className="flex-column space-y-6 text-gray-500">
-                        <h3>Description</h3>
-                        <h3>Type</h3>
-                        <h3>Localisation</h3>
-                        <h3>Capacity</h3>
-                        <h3>Nb chairs</h3>
-                        <h3>Specifications</h3>
-                    </div>
+                <div className="flex justify-between items-start py-4 px-6 rounded-t border-b dark:border-gray-600">
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Add event for <span className="font-bold text-green-800">{office.name}</span></h3>
+                    {/*<button type="button" onClick={handleCloseClick} className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="myModal">*/}
+                    <button type="button" onClick={() => setShowModal(false)} className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="myModal">
+                        x
+                    </button>
+                </div>
 
-                    <div className="flex-column space-y-6">
-                        <h3>{office.description ?? '-'}</h3>
-                        <h3>{office.type}</h3>
-                        <h3>{workspace.attributes.name}</h3>
-                        <h3>{office.capacity}</h3>
-                        <h3>{office.nb_chairs}</h3>
+                <div className="py-4 px-6 space-y-6">
+                    <div className="w-full flex space-x-4">
+                        <div className="flex-column space-y-6 text-gray-500">
+                            <h3>Description</h3>
+                            <h3>Type</h3>
+                            <h3>Localisation</h3>
+                            <h3>Capacity</h3>
+                            <h3>Nb chairs</h3>
+                            <h3>Specifications</h3>
+                        </div>
 
-                        <div className="flex space-x-6">
-                            <p className="italic"><span className={`text-xs inline-block p-1 leading-none text-center whitespace-nowrap align-middle font-semibold text-white rounded-full ${office.wi_fi ? "bg-green-400" : "bg-red-400"}`}></span> wifi</p>
-                            <p><span className={`text-xs inline-block p-1 leading-none text-center whitespace-nowrap align-middle font-semibold text-white rounded-full ${office.projector ? "bg-green-400" : "bg-red-400"}`}></span> projector</p>
-                            <p><span className={`text-xs inline-block p-1 leading-none text-center whitespace-nowrap align-middle font-semibold text-white rounded-full ${office.whiteboard ? "bg-green-400" : "bg-red-400"}`}></span> whiteboard</p>
-                            <p><span className={`text-xs inline-block p-1 leading-none text-center whitespace-nowrap align-middle font-semibold text-white rounded-full ${office.printing_service ? "bg-green-400" : "bg-red-400"}`}></span> printing service</p>
-                            <p><span className={`text-xs inline-block p-1 leading-none text-center whitespace-nowrap align-middle font-semibold text-white rounded-full ${office.coffee_and_tea ? "bg-green-400" : "bg-red-400"}`}></span> coffee & tea</p>
+                        <div className="flex-column space-y-6">
+                            <h3>{office.description ?? '-'}</h3>
+                            <h3>{office.type}</h3>
+                            <h3>{workspace.attributes.name}</h3>
+                            <h3>{office.capacity}</h3>
+                            <h3>{office.nb_chairs}</h3>
+
+                            <div className="flex space-x-6">
+                                <p className="italic"><span className={`text-xs inline-block p-1 leading-none text-center whitespace-nowrap align-middle font-semibold text-white rounded-full ${office.wi_fi ? "bg-green-400" : "bg-red-400"}`}></span> wifi</p>
+                                <p><span className={`text-xs inline-block p-1 leading-none text-center whitespace-nowrap align-middle font-semibold text-white rounded-full ${office.projector ? "bg-green-400" : "bg-red-400"}`}></span> projector</p>
+                                <p><span className={`text-xs inline-block p-1 leading-none text-center whitespace-nowrap align-middle font-semibold text-white rounded-full ${office.whiteboard ? "bg-green-400" : "bg-red-400"}`}></span> whiteboard</p>
+                                <p><span className={`text-xs inline-block p-1 leading-none text-center whitespace-nowrap align-middle font-semibold text-white rounded-full ${office.printing_service ? "bg-green-400" : "bg-red-400"}`}></span> printing service</p>
+                                <p><span className={`text-xs inline-block p-1 leading-none text-center whitespace-nowrap align-middle font-semibold text-white rounded-full ${office.coffee_and_tea ? "bg-green-400" : "bg-red-400"}`}></span> coffee & tea</p>
+                            </div>
                         </div>
                     </div>
+                </div>
+
+                <div className="flex items-center justify-end py-4 px-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                    <button data-modal-toggle="myModal" type="button" onClick={() => addItem()} className="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save</button>
+                    <button data-modal-toggle="myModal" type="button" onClick={() => setShowModal(false)} className="text-gray-500 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">Cancel</button>
                 </div>
             </Modal>}
         </Layout>

@@ -78,15 +78,6 @@ const Nav = ({ workspaces, auth_user }) => {
             </ul>
           </li>
 
-          <li className="relative" id="sidenavEx4">
-            <a className="flex items-center text-xs uppercase font-semibold py-4 px-6 h-12 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-              </svg>
-              <span className="pr-6 pl-1 text-green-500 hover:text-white">My agenda</span>
-            </a>
-          </li>
-
           <hr className="my-4"/>
 
           {!loading &&
@@ -94,8 +85,10 @@ const Nav = ({ workspaces, auth_user }) => {
               <li className="relative" id="profile">
                 <Link href="/reservations">
                   <a className="flex items-center text-xs uppercase font-semibold py-4 px-6 h-12 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer">
-                    *
-                    <span className="pr-6 pl-1 text-green-500 hover:text-white">My reservations</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                    <span className="pr-6 pl-1 text-green-500 hover:text-white">My agenda</span>
                   </a>
                 </Link>
               </li>

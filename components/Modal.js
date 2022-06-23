@@ -18,7 +18,7 @@ export default function Modal({showModal, onClose, addReservation, children, off
         onClose();
     };
 
-    if (isBrowser && showModal && office) {
+    if (isBrowser && showModal) {
         return (
             <div id="myModal" tabIndex="-1" aria-hidden="true" className="overflow-y-auto overflow-x-hidden absolute top-0 right-0 left-0 z-50 md:inset-0 flex items-center justify-center bg-black bg-opacity-25">
                 <div className="relative max-w-7xl mx-auto bg-white rounded-lg shadow-lg">

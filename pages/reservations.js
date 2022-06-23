@@ -21,12 +21,6 @@ export default function Reservations({reservations}) {
     // const { user } = useUser();
     // console.log('reservations user ', user); // ok
 
-    const handleEditClick = (arg) => {
-        // setShowEditModal(true);
-        // setReservation(arg.resource._resource.extendedProps.office);
-        // console.log(arg.resource._resource.extendedProps); // id, title
-    };
-
     const loadItem = (item) => {
         console.log('loadItem', item); // id, title
         setReservation(item);
@@ -109,7 +103,7 @@ export default function Reservations({reservations}) {
                 </div>
             </div>
 
-            {reservation && <Modal onClose={() => setShowModal(false)} editReservation={editItem} showModal={showModal} reservation={reservation} office={office}>
+            {reservation && <Modal onClose={() => setShowModal(false)} editReservation={editItem} showModal={showModal}>
                 <div className="flex justify-between items-start py-4 px-6 rounded-t border-b dark:border-gray-600">
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Edit event for <span className="font-bold text-green-800">{office.name}</span></h3>
                     <button type="button" onClick={() => setShowModal(false)} className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="myModal">
