@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { fetchAPI } from "../lib/api";
+import { fetchAPI } from "../../lib/api";
 
 export default function Register({ })
 {

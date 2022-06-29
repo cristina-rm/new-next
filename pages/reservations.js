@@ -1,6 +1,6 @@
 // import CustomDataTable from "../components/CustomDataTable";
 import { fetchAPI } from "../lib/api";
-import Layout from "../components/layout";
+import Layout from "../components/Layout";
 import Modal from "../components/Modal";
 import { useFetchUser, useUser } from "../lib/authContext";
 import dynamic from 'next/dynamic';
@@ -18,6 +18,16 @@ export default function Reservations({reservations}) {
     const [showModal, setShowModal] = useState(false);
     const [reservation, setReservation] = useState(null);
     const [office, setOffice] = useState(null);
+    const [data, setData] = useState({
+        // "data": {
+            "title": "",
+            "user": user ? user.id : 1,
+            "office": office ? office.id : 3,
+            "all_day": false,
+            "start_date": "",
+            "end_date": ""
+        // }
+    });
     // const { user } = useUser();
     // console.log('reservations user ', user); // ok
 
@@ -28,9 +38,21 @@ export default function Reservations({reservations}) {
         setShowModal(true);
     };
 
-    const editItem = (id) => {
+    const handleChange = (e) => {
+        setData({ ...data, [e.target.name]: e.target.value });
+    };
+
+    const updateItem = async (id) => {
         console.log('editItem', id); // id, title
+        console.log('data in edit item ', data);
+       
+        const response = await fetchAPI(`/reservations/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(data)
+        });
+
         setShowModal(false);
+        toast.success("The reservation has been successfully updated.");
     };
 
     const columns = [
@@ -103,7 +125,7 @@ export default function Reservations({reservations}) {
                 </div>
             </div>
 
-            {reservation && <Modal onClose={() => setShowModal(false)} editReservation={editItem} showModal={showModal}>
+            {reservation && <Modal onClose={() => setShowModal(false)} editReservation={updateItem} showModal={showModal}>
                 <div className="flex justify-between items-start py-4 px-6 rounded-t border-b dark:border-gray-600">
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Edit event for <span className="font-bold text-green-800">{office.name}</span></h3>
                     <button type="button" onClick={() => setShowModal(false)} className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="myModal">
@@ -113,10 +135,17 @@ export default function Reservations({reservations}) {
 
                 <div className="py-4 px-6 space-y-6">
                     <h3>{reservation.title}</h3>
+
+                    <form className="form-inline">
+                        <input type="text" name="title" placeholder="Title" onChange={handleChange}
+                            className="form-input py-2 px-2 mr-4 rounded"/>
+                        <input type="date" name="start_date" placeholder="Start Date" onChange={handleChange}
+                            className="form-input py-2 px-2 mr-4 rounded"/>
+                    </form>
                 </div>
 
                 <div className="flex items-center justify-end py-4 px-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                    <button data-modal-toggle="myModal" type="button" onClick={() => editItem(reservation)} className="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save</button>
+                    <button data-modal-toggle="myModal" type="submit" onClick={() => updateItem(reservation)} className="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save</button>
                     <button data-modal-toggle="myModal" type="button" onClick={() => setShowModal(false)} className="text-gray-500 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">Cancel</button>
                 </div>
             </Modal>}
@@ -124,7 +153,7 @@ export default function Reservations({reservations}) {
     )
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ }) {
     const reservationsRes = await fetchAPI('/reservations?populate=*');
     const reservations = reservationsRes.data;
     const dataForReservations = reservations.map((reservation) => {

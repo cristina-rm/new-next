@@ -1,16 +1,32 @@
 import React from "react";
 import Link from "next/link";
-import { useState } from "react";
-import { fetchAPI } from "../lib/api";
+import { useState, useEffect } from "react";
 import { unsetToken } from "../lib/auth";
 import { useUser } from "../lib/authContext";
+import Router from 'next/router';
+import { checkCookies, getCookie } from 'cookies-next';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 const Nav = ({ workspaces, auth_user }) => {
-  const { user, loading } = useUser();
-  // console.log('auth ', auth_user);
+  // const { user, loading } = useUser();
+  const [isLogged, setIsLogged] = useState();
+  // const [session, loading] = useSession(); // not working
+  const { data: session, status } = useSession();
+  console.log('status: ', status);
+
+  /*useEffect(() => {
+    // setIsLogged(!!localStorage.getItem('jwt'));
+    setIsLogged(getCookie('jwt'));
+  }, []);*/
 
   const logout = () => {
       unsetToken();
+
+      if (!checkCookies('jwt')) {
+          console.log('You have been successfully logged out!');
+          // toast.success('You have been successfully logged out.');
+          Router.push("/auth/login");
+      }
   };
 
   return (
@@ -80,8 +96,8 @@ const Nav = ({ workspaces, auth_user }) => {
 
           <hr className="my-4"/>
 
-          {!loading &&
-            (user ? <>
+          {session && status === "authenticated" &&
+          (<>
               <li className="relative" id="profile">
                 <Link href="/reservations">
                   <a className="flex items-center text-xs uppercase font-semibold py-4 px-6 h-12 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer">
@@ -102,19 +118,30 @@ const Nav = ({ workspaces, auth_user }) => {
                 </Link>
               </li>
 
+              <Link href="/api/auth/signout">
+                <a className="flex items-center text-xs underline font-semibold py-4 px-6 h-8 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer" onClick={e => {e.preventDefault(); signOut(); }}>Sign Out Next Auth</a>
+              </Link>
+
               <li className="relative">
                 <a className="flex items-center text-xs uppercase font-semibold py-4 px-6 h-12 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer" onClick={logout}>
                   *
                   <span className="pr-6 pl-1 text-green-500 hover:text-white">Log out</span>
                 </a>
               </li>
-            </> :  '')
+            </>)
           }
 
-          {!loading &&
-            (!user ? <>
+          {/*{status !== "authenticated" && !session*/}
+          {status !== "loading" && !session &&
+            (<>
+              <li>
+                <Link href="/api/auth/signin">
+                  <a className="flex items-center text-xs underline font-semibold py-4 px-6 h-8 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer" onClick={e => {e.preventDefault(); signIn(); }}>Sign In with Next Auth</a>
+                </Link>
+              </li>
+
               <li className="relative">
-                <Link href="/login">
+                <Link href="/auth/login">
                   <a className="flex items-center text-xs uppercase font-semibold py-4 px-6 h-12 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
@@ -125,7 +152,7 @@ const Nav = ({ workspaces, auth_user }) => {
               </li>
 
               <li className="relative">
-                <Link href="/register">
+                <Link href="/auth/register">
                   <a className="flex items-center text-xs uppercase font-semibold py-4 px-6 h-12 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
@@ -134,7 +161,7 @@ const Nav = ({ workspaces, auth_user }) => {
                   </a>
                 </Link>
               </li>
-            </> : '')
+            </>)
           }
         </ul>
       </div>

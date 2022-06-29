@@ -1,39 +1,58 @@
 import NextAuth from "next-auth";
-import Providers from "next-auth/providers";
+import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
+import CredentialsProvider from "next-auth/providers/credentials";
 
-const options = {
+export default NextAuth({
   providers: [
-    Providers.Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        identifier: { label: "Username", type: "text", placeholder: "Username" },
+        password: {  label: "Password", type: "password" }
+      },
+      async authorize(credentials, req) {
+        const res = await fetch("http://localhost:1337/api/auth/local", {
+          method: 'POST',
+          body: JSON.stringify(credentials),
+          headers: { "Content-Type": "application/json" }
+        })
+        const user = await res.json();
+        console.log('in nextauth.js ', user); // jwt & user object
+
+        // If no error and we have user data, return it
+        if (res.ok && user) {
+          console.log('here');
+          return user;
+        }
+        // Return null if user data could not be retrieved
+        return null;
+      }
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_ID,
+      clientSecret: process.env.FACEBOOK_SECRET,
+    }),
+    GithubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
     }),
   ],
-  database: process.env.NEXT_PUBLIC_DATABASE_URL,
-  session: {
-    jwt: true,
-  },
   callbacks: {
-    session: async (session, user) => {
-      session.jwt = user.jwt;
-      session.id = user.id;
-      return Promise.resolve(session);
+    jwt: async ({ token, user }) => {
+      user && (token.user = user);
+      return token;
     },
-    jwt: async (token, user, account) => {
-      const isSignIn = user ? true : false;
-      if (isSignIn) {
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/${account.provider}/callback?access_token=${account?.accessToken}`
-        );
-        const data = await response.json();
-        token.jwt = data.jwt;
-        token.id = data.user.id;
-      }
-      return Promise.resolve(token);
+    session: async ({ session, token }) => {
+      session.user = token.user.user;  // Setting token in session
+      session.jwt = token.user.jwt;  // Setting token in session
+      return session;
     },
   },
-};
-
-const Auth = (req, res) =>
-    NextAuth(req, res, options);
-
-export default Auth;
+  secret: process.env.NEXTAUTH_SECRET,
+});

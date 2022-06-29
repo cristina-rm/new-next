@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { fetchAPI } from "../../lib/api";
-import Layout from "../../components/layout";
+import Layout from "../../components/Layout";
 import Modal from "../../components/Modal";
 import { useFetchUser } from "../../lib/authContext"; // needed for dayClick
 import dynamic from 'next/dynamic';
@@ -85,9 +85,10 @@ export default function Workspace({ workspace, workspaces, dataForCalendar, offi
                 "Content-Type": "application/json",
                 "Accept": "application/json",
             },
-            body: JSON.stringify({ data: formData })
+            body: JSON.stringify({ data }) 
         })
         .then(response => {
+            // response.status == 400 => validation error
             if (!response.ok) {
               throw new Error('error => how to get bad request message here?')
             } else  {

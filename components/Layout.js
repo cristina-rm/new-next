@@ -1,7 +1,7 @@
-import Nav from "./nav";
+import Nav from "./Nav";
 import { UserProvider } from "../lib/authContext";
 
-const Layout = ({ children, workspaces, user, loading = false }) => (
+const Layout = ({ children, workspaces, user='', loading = false }) => (
     <UserProvider value={{user, loading}}>
       <div className="min-h-screen flex space-x-10">
         <Nav workspaces={workspaces} auth_user={user} />

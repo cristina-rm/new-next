@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { fetchAPI } from "../../lib/api";
-import Layout from "../../components/layout";
+import Layout from "../../components/Layout";
 
 export default function Post({ post, workspaces })
 {

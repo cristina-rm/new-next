@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia } from "../lib/media";
-import Layout from "../components/layout";
-import {useFetchUser} from "../lib/authContext";
+import Layout from "../components/Layout";
+import { useFetchUser } from "../lib/authContext";
 import dynamic from 'next/dynamic';
 
 const FullCalendar = dynamic(() => import('../components/FullCalendar'), {
@@ -10,12 +10,12 @@ const FullCalendar = dynamic(() => import('../components/FullCalendar'), {
 });
 
 export default function Home({ workspaces, dataForCalendar, offices }) {
-    const { user, loading } = useFetchUser();
+    const { user } = useFetchUser();
     const handleDateClick = (arg) => { // bind with an arrow function
         alert(arg.dateStr);
     };
     // console.log(dataForCalendar);
-    console.log('index user ',user);
+    // console.log('index user ',user,loading);
 
     return (
         <Layout workspaces={workspaces} user={user}>
@@ -53,7 +53,7 @@ export default function Home({ workspaces, dataForCalendar, offices }) {
                 ))}
             </div>
 
-            <div className="p-0 w-full">
+            {/*<div className="p-0 w-full">
                 <hr/>
                 <h1 className="text-red-700 mb-3">Test calendar</h1>
                 <FullCalendar
@@ -62,7 +62,7 @@ export default function Home({ workspaces, dataForCalendar, offices }) {
                     resources={offices}
                     editable selectable
                 />
-            </div>
+            </div>*/}
         </Layout>
     )
 }
