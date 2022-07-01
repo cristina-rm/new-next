@@ -2,28 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61147171-9635-4e4b-a673-f71d711152c1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/components/ProtectedRoute.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/constants.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/api/login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/auth/logout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/TimePickerComponent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/clock.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/time_picker.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/RouteGuard.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/RouteGuard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/image.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Image.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/nav.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Nav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Nav.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Nav.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/authContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/authContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auth/login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/posts/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/posts/[id].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/posts/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/posts/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auth/register.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/reservations.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/reservations.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/workspaces/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workspaces/[id].js" afterDir="false" />
     </list>
@@ -89,7 +81,8 @@
       <workItem from="1655273308179" duration="38532000" />
       <workItem from="1655718376798" duration="14189000" />
       <workItem from="1655906417774" duration="18776000" />
-      <workItem from="1656334763016" duration="57804000" />
+      <workItem from="1656334763016" duration="72933000" />
+      <workItem from="1656571079765" duration="9497000" />
     </task>
     <servers />
   </component>

@@ -1,32 +1,27 @@
-// import CustomDataTable from "../components/CustomDataTable";
 import { fetchAPI } from "../lib/api";
 import Layout from "../components/Layout";
 import Modal from "../components/Modal";
-import { useFetchUser, useUser } from "../lib/authContext";
 import dynamic from 'next/dynamic';
 import {useState} from "react";
 import moment from 'moment';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getSession, useSession } from "next-auth/react";
 
 const CustomDataTable = dynamic(() => import('../components/CustomDataTable'), {
     ssr: false
 });
 
 export default function Reservations({reservations}) {
-    const { user } = useFetchUser();
+    const { data: session } = useSession();
     const [showModal, setShowModal] = useState(false);
     const [reservation, setReservation] = useState(null);
     const [office, setOffice] = useState(null);
     const [data, setData] = useState({
-        // "data": {
-            "title": "",
-            "user": user ? user.id : 1,
-            "office": office ? office.id : 3,
-            "all_day": false,
-            "start_date": "",
-            "end_date": ""
-        // }
+        "title": "",
+        "user": session && session.user ? session.user.id : 1,
+        "office": office ? office.id : 3,
+        "all_day": false
     });
     // const { user } = useUser();
     // console.log('reservations user ', user); // ok
@@ -114,13 +109,13 @@ export default function Reservations({reservations}) {
     ];
 
     return (
-        <Layout user={user}>
+        <Layout user={session.user}>
             <ToastContainer position="top-center"/>
 
             <div className="p-0 w-full">
-                <h3 className="text-green-700 font-medium">Logged user: {user ? user.username : 'no logged user'}</h3>
+                <h3 className="text-green-700 font-medium">Hello {session.user ? session.user.username : 'no logged user'}!</h3>
                 <div className="py-10">
-                    <h1 className="font-bold italic text-green-500 mb-8">Reservations page</h1>
+                    <h1 className="font-bold italic text-green-500 mb-8">Your reservations</h1>
                     <CustomDataTable reservations={reservations} columns={columns} title=""/>
                 </div>
             </div>
@@ -153,8 +148,20 @@ export default function Reservations({reservations}) {
     )
 }
 
-export async function getStaticProps({ }) {
-    const reservationsRes = await fetchAPI('/reservations?populate=*');
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    const jwt = session ? session.jwt : '';
+
+    const authUserRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/me`, {
+        method: `GET`,
+        headers: {
+            Authorization: `Bearer ${jwt}`
+        }
+    });
+
+    const authUser = await authUserRes.json();
+    const id = authUser ? authUser.id : 1;
+    const reservationsRes = await fetchAPI(`/reservations?populate=*&filters[user][id][$eq]=${id}`);
     const reservations = reservationsRes.data;
     const dataForReservations = reservations.map((reservation) => {
         return {
@@ -172,7 +179,8 @@ export async function getStaticProps({ }) {
     return {
         props: {
             reservations: dataForReservations,
-        },
-        revalidate: 1
+        }
     }
 }
+
+Reservations.auth = true;

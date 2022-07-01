@@ -19,11 +19,9 @@ export default NextAuth({
           headers: { "Content-Type": "application/json" }
         })
         const user = await res.json();
-        console.log('in nextauth.js ', user); // jwt & user object
 
         // If no error and we have user data, return it
         if (res.ok && user) {
-          console.log('here');
           return user;
         }
         // Return null if user data could not be retrieved
@@ -53,6 +51,13 @@ export default NextAuth({
       session.jwt = token.user.jwt;  // Setting token in session
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url
+      return baseUrl
+    }
   },
   secret: process.env.NEXTAUTH_SECRET,
 });

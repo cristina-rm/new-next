@@ -20,6 +20,8 @@ const withTM = require("next-transpile-modules")([
   "@fullcalendar/daygrid",
   "@fullcalendar/interaction",
   "@fullcalendar/timegrid",
+  "react-clock",
+  "react-time-picker",
   // "@babel/preset-react",
 ]);
 
@@ -32,5 +34,5 @@ module.exports = withTM({
   },
   env: {
     API_ENDPOINT: process.env.NEXT_PUBLIC_STRAPI_API_URL
-  }
+  },
 });

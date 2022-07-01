@@ -1,32 +1,30 @@
 import React from "react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { unsetToken } from "../lib/auth";
-import { useUser } from "../lib/authContext";
-import Router from 'next/router';
-import { checkCookies, getCookie } from 'cookies-next';
+import { useState } from "react";
 import { signIn, signOut, useSession } from 'next-auth/react';
 
-const Nav = ({ workspaces, auth_user }) => {
-  // const { user, loading } = useUser();
-  const [isLogged, setIsLogged] = useState();
-  // const [session, loading] = useSession(); // not working
+const Nav = () => {
   const { data: session, status } = useSession();
-  console.log('status: ', status);
+  // console.log('status: ', status);
 
   /*useEffect(() => {
     // setIsLogged(!!localStorage.getItem('jwt'));
     setIsLogged(getCookie('jwt'));
   }, []);*/
 
-  const logout = () => {
-      unsetToken();
+  const logout = async (e) => {
+    e.preventDefault();
+      // unsetToken();
 
-      if (!checkCookies('jwt')) {
+      /*if (!checkCookies('jwt')) {
           console.log('You have been successfully logged out!');
           // toast.success('You have been successfully logged out.');
           Router.push("/auth/login");
-      }
+      }*/
+    signOut({redirect: false, callbackUrl: "http://localhost:3000/"});
+    // const data = await signOut({redirect: false, callbackUrl: "http://localhost:3000/"});
+    // Router.push(data.url);
+    // useRouter().push(data.url);
   };
 
   return (
@@ -118,29 +116,39 @@ const Nav = ({ workspaces, auth_user }) => {
                 </Link>
               </li>
 
-              <Link href="/api/auth/signout">
-                <a className="flex items-center text-xs underline font-semibold py-4 px-6 h-8 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer" onClick={e => {e.preventDefault(); signOut(); }}>Sign Out Next Auth</a>
-              </Link>
-
               <li className="relative">
+                <Link href="/api/auth/signout">
+                  <a className="flex items-center text-xs uppercase font-semibold py-4 px-6 h-12 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer" onClick={logout}>
+                    {/*e => {e.preventDefault(); signOut({redirect: false, callbackUrl: "/"});*/}
+                    *
+                    <span className="pr-6 pl-1 text-green-500 hover:text-white">Sign out</span>
+                  </a>
+                </Link>
+              </li>
+
+              {/*<li className="relative">
                 <a className="flex items-center text-xs uppercase font-semibold py-4 px-6 h-12 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer" onClick={logout}>
                   *
                   <span className="pr-6 pl-1 text-green-500 hover:text-white">Log out</span>
                 </a>
-              </li>
+              </li>*/}
             </>)
           }
 
-          {/*{status !== "authenticated" && !session*/}
           {status !== "loading" && !session &&
             (<>
-              <li>
+              <li className="relative">
                 <Link href="/api/auth/signin">
-                  <a className="flex items-center text-xs underline font-semibold py-4 px-6 h-8 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer" onClick={e => {e.preventDefault(); signIn(); }}>Sign In with Next Auth</a>
+                  <a className="flex items-center text-xs uppercase font-semibold py-4 px-6 h-8 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer" onClick={e => {e.preventDefault(); signIn({redirect: false, callbackUrl: "/profile"}); }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                    </svg>
+                    <span className="pr-6 pl-1 text-gray-200 hover:text-white">Sign In</span>
+                  </a>
                 </Link>
               </li>
 
-              <li className="relative">
+              {/*<li className="relative">
                 <Link href="/auth/login">
                   <a className="flex items-center text-xs uppercase font-semibold py-4 px-6 h-12 overflow-hidden text-gray-50 text-ellipsis whitespace-nowrap transition duration-300 ease-in-out cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -149,7 +157,7 @@ const Nav = ({ workspaces, auth_user }) => {
                     <span className="pr-6 pl-1 text-gray-200 hover:text-white">Login</span>
                   </a>
                 </Link>
-              </li>
+              </li>*/}
 
               <li className="relative">
                 <Link href="/auth/register">
